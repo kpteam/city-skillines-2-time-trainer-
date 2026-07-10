@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<TargetFramework>net472</TargetFramework>
+	<LangVersion>latest</LangVersion>
+	<Nullable>enable</Nullable>
+	<ImplicitUsings>disable</ImplicitUsings>
+	<AssemblyName>CitySkylines2TimeController</AssemblyName>
+	<RootNamespace>CitySkylines2TimeController</RootNamespace>
+	<GameDir Condition="'$(GameDir)' == ''">H:\SteamLibrary\steamapps\common\Cities Skylines II</GameDir>
+	<BepInExCoreDir>$(GameDir)\BepInEx\core</BepInExCoreDir>
+	<ManagedDir>$(GameDir)\Cities2_Data\Managed</ManagedDir>
+  </PropertyGroup>
+
+  <Target Name="ValidateGameReferences" BeforeTargets="BeforeBuild">
+	<Error Condition="!Exists('$(BepInExCoreDir)\\BepInEx.dll')" Text="BepInEx.dll not found. Install BepInEx into the game folder and verify GameDir ($(GameDir))." />
+	<Error Condition="!Exists('$(BepInExCoreDir)\\0Harmony.dll')" Text="0Harmony.dll not found under BepInEx core folder." />
+	<Error Condition="!Exists('$(ManagedDir)\\UnityEngine.dll')" Text="UnityEngine.dll not found under game Managed folder. Verify GameDir ($(GameDir))." />
+	<Error Condition="!Exists('$(ManagedDir)\\UnityEngine.CoreModule.dll')" Text="UnityEngine.CoreModule.dll not found under game Managed folder. Verify GameDir ($(GameDir))." />
+  </Target>
+
+  <ItemGroup>
+	<Reference Include="BepInEx">
+	  <HintPath>$(BepInExCoreDir)\BepInEx.dll</HintPath>
+	  <Private>false</Private>
+	</Reference>
+	<Reference Include="0Harmony">
+	  <HintPath>$(BepInExCoreDir)\0Harmony.dll</HintPath>
+	  <Private>false</Private>
+	</Reference>
+	<Reference Include="UnityEngine">
+	  <HintPath>$(ManagedDir)\UnityEngine.dll</HintPath>
+	  <Private>false</Private>
+	</Reference>
+	<Reference Include="UnityEngine.CoreModule">
+	  <HintPath>$(ManagedDir)\UnityEngine.CoreModule.dll</HintPath>
+	  <Private>false</Private>
+	</Reference>
+  </ItemGroup>
+</Project>
